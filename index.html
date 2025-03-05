@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'">
+    <title>標準偏差 - Hyojun Hensa</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+    <h1>標準偏差 - Hyojun Hensa</h1>
+
+    <!-- Hidden Text Areas (not needed anymore, but left for reference) -->
+    <div id="loadingOverlay">
+        <div class="custom-loader">
+          <!-- Customize your loader structure here -->
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+      <div id="alertOverlay">
+        <div id="alertModal">
+          <div id="alertMessage"></div>
+          <button id="alertCloseBtn">Close</button>
+        </div>
+      </div>
+
+    <div class="form-style-2">
+        <form onsubmit="submitForm()">
+          <label for="fileInput">
+            <span>入力ログファイル:<span class="required"></span></span>
+            <button type="button" onclick="openFile()">選択ボタン</button> <!--refreshBeforeUpload(); -->
+            <div id="uploaded-file-path"></div>
+          </label>
+          <label for="fileInput">
+            <span>グラフ: <span class="required"></span>
+            </span><button type="button" onclick="openSaveDialog4()">選択ボタン</button>
+            <div id="created-file4"></div>
+          </label>
+          <button type="button" id="downloadBtn" onclick="saveFile()">ダウンロード</button>
+        </form>
+    </div>
+
+    <script>
+        // Include renderer.js directly in the HTML
+        const script = document.createElement('script');
+        script.src = 'renderer.js';
+        document.body.appendChild(script);
+    </script>
+</body>
+</html>

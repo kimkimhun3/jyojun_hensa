@@ -1,0 +1,19 @@
+{
+  "name": "hyojun-hensa",
+  "version": "1.0.0",
+  "description": "Standard Deviation",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "author": "Kimhoon",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^34.3.0"
+  },
+  "dependencies": {
+    "iconv-lite": "^0.6.3",
+    "xlsx-chart": "github:Tsenzuk/xlsx-chart#master"
+  }
+}
