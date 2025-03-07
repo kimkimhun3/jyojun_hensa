@@ -31,7 +31,6 @@ if __name__ == "__main__":
     tableSheet = wb.Sheets("Table")
     tableSheet.Cells(1, 1).Value = ""
     tableSheet.Cells(2, 1).Value = "No."
-    print(f"File PAth from JS: {filePath}")
 
     try:
         sheet = wb.Sheets(1)
@@ -58,12 +57,10 @@ if __name__ == "__main__":
 
                     # Get all the values in the series
                     values = series.Values
-                    max_value = max(values) # Get Max value
-                    min_value = min(values) # Get Min value
+                    max_value = max(values)
                     
                     # Console the maximum value for debugging
                     print(f"Max Bitrate Value: {max_value}")
-                    print("Hui")
 
                     # Adjust max value based on custom conditions
                     y_axis_max = adjust_max_value(max_value)
@@ -88,27 +85,18 @@ if __name__ == "__main__":
                     width = 240
                     height = 30
 
-            # Display Min Bitrate
-            chart_shape_max = sheet.Shapes.AddTextbox(Orientation=1, Left=left_position, Top=top_position, Width=width, Height=height)
-            chart_shape_max.TextFrame.Characters().Text = f"Min Bitrate: {min_value:.2f} kbps"
-            chart_shape_max.TextFrame.Characters().Font.Bold = True  # Make text bold
-            chart_shape_max.TextFrame.Characters().Font.Size = 11  # Set font size for clarity
-            
-            # Display Max Bitrate
-            top_position += height + 5  # Position max bitrate text box below the standard deviation
             chart_shape_max = sheet.Shapes.AddTextbox(Orientation=1, Left=left_position, Top=top_position, Width=width, Height=height)
             chart_shape_max.TextFrame.Characters().Text = f"Max Bitrate: {max_value:.2f} kbps"
             chart_shape_max.TextFrame.Characters().Font.Bold = True  # Make text bold
             chart_shape_max.TextFrame.Characters().Font.Size = 11  # Set font size for clarity
 
-            # Display Average Bitrate
             top_position += height + 5  # Position max bitrate text box below the standard deviation
             chart_shape_avg = sheet.Shapes.AddTextbox(Orientation=1, Left=left_position, Top=top_position, Width=width, Height=height)
             chart_shape_avg.TextFrame.Characters().Text = f"Average Bitrate: {average_value:.2f} kbps"
             chart_shape_avg.TextFrame.Characters().Font.Bold = True  # Make text bold
             chart_shape_avg.TextFrame.Characters().Font.Size = 11  # Set font size for clarity
 
-            # Display Population Standard Deviation
+            # Add text box for standard deviation
             top_position += height + 5  # Position standard deviation text box below the average
             chart_shape_std = sheet.Shapes.AddTextbox(Orientation=1, Left=left_position, Top=top_position, Width=width, Height=height)
             chart_shape_std.TextFrame.Characters().Text = f"Population Standard Deviation: {standard_deviation:.2f} kbps"
@@ -118,10 +106,9 @@ if __name__ == "__main__":
         else:
             print("No charts found in the first sheet.")
 
-        # Save directly to the original file without overwrite prompt python -m nuitka --standalone --onefile --enable-console python.py
-        
-        wb.Save()
-        
+        # Determine appropriate file format
+        file_format = 51 if ext.lower() == ".xlsx" else 56  # 51 = .xlsx, 56 = .xls
+        wb.Save()  # Save directly to the original file
 
     except Exception as e:
         print(f"Error: {e}")
@@ -129,5 +116,5 @@ if __name__ == "__main__":
     finally:
         wb.Close(SaveChanges=1)
         xl.Quit()
-    print(f"File saved: {savePath}")
 
+    print(f"File saved: {savePath}")

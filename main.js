@@ -7,13 +7,16 @@ let win;
 
 const createWindow = () => {
   win = new BrowserWindow({
-    width: 600,
-    height: 400,
+    width: 710,
+    height: 500,
+    icon: './logo.ico',
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
       enableRemoteModule: true,
+      devTools: true // Disable developer tools
     },
+    autoHideMenuBar: true
   });
 
   win.loadFile('index.html');

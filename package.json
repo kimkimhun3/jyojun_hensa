@@ -1,16 +1,34 @@
 {
   "name": "hyojun-hensa",
+  "icon": "logo.png",
   "version": "1.0.0",
   "description": "Standard Deviation",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "electron .",
+    "package": "electron-packager . Hyojun --platform=win32 --icon=./logo.ico --arch=x64 --out=Hyojun",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "build": "electron-builder --win"
+  },
+  "build": {
+    "appId": "com.yourapp.id",
+    "productName": "YourApp",
+    "win": {
+      "target": "portable"
+    },
+    "asar": true,
+    "files": [
+      "dist/**/*"
+    ]
   },
   "author": "Kimhoon",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^34.3.0"
+    "electron": "^34.3.0",
+    "electron-builder": "^25.1.8",
+    "electron-webpack": "^2.8.2"
   },
   "dependencies": {
     "iconv-lite": "^0.6.3",

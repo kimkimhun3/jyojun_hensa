@@ -42,7 +42,7 @@ function saveFile() {
 }
 ipcRenderer.on("file-content", (event, content) => {
   inputText = content;
-  console.log("Input Data: ",inputText)
+  // console.log("Input Data: ",inputText)
 });
 
 function displayFilePath(filePath, elementId) {
@@ -120,7 +120,6 @@ function refreshBeforeUpload() {
 }
 function createExcelFile(filePath) {
   var xlsxChart = new XLSXChart();
-  console.log("Bitrate: ",  bitrateData)
   //Bitrate object
   const bitrateObject = {
     Bitrate: bitrateData.reduce((acc, bitrate, index) => {
@@ -166,25 +165,43 @@ function createExcelFile(filePath) {
       if (err) {
           console.error(err);
       } else {
-          loadingOverlay.style.display = "flex";
-          fs.writeFileSync(filePath, data);
-          loadingOverlay.style.display = "none";
-          executePythonScript(filePath);
-          showAlert("ファイルダウンロードを保存しました");
-          console.log('Excel file with column chart created successfully at:', filePath);
+          // loadingOverlay.style.display = "flex";
+          // fs.writeFileSync(filePath, data);
+          // // loadingOverlay.style.display = "none";
+          // executePythonScript(filePath);
+          // // showAlert("ファイルダウンロードを保存しました");
+          // console.log('Excel file with column chart created successfully at:', filePath);
+
+          try {
+            fs.writeFileSync(filePath, data); // Try to write the file
+            executePythonScript(filePath);
+            console.log('Excel file with column chart created successfully at:', filePath);
+          } catch (err) {
+            // Handle error if the file is open or locked
+            // console.error("Error writing file:", err);
+            showAlert("ファイルが開かれているため、上書きできません。");
+            loadingOverlay.style.display = "none"; // Hide loading overlay
+          }
       }
   });
     // Execute Python script after Excel file generation
     const { exec } = require('child_process');
     function executePythonScript(filePath) {
       // Execute the Python script
-      const pythonScriptPath = 'python.py'; // Update with the actual name of your Python script
-      exec(`python ${pythonScriptPath} "${filePath}"`, (error, stdout, stderr) => {
+      const pythonScriptPath = 'python.exe'; // Update with the actual name of your Python script
+      exec(`${pythonScriptPath} "${filePath}"`, (error, stdout, stderr) => {
           if (error) {
               console.error(`Error executing Python script: ${error}`);
               return;
           }
           console.log(`Python script output: ${stdout}`);
+          if (stdout.includes("File saved:")){
+            loadingOverlay.style.display = "none";  
+            showAlert("ファイルダウンロードを保存しました");
+            setTimeout(() => {
+              console.clear(); // This clears the console
+            }, 500); // 500ms = 1/2 second
+          }
       });
     }
 }
